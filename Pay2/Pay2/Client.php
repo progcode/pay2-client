@@ -29,6 +29,9 @@ class Client
      */
     private $dotenv;
 
+    /**
+     * Client constructor.
+     */
     public function __construct()
     {
         $this->dotenv = Dotenv::createMutable(__DIR__.'/../../');
@@ -36,6 +39,8 @@ class Client
     }
 
     /**
+     * Generate Pay2 site secret key for authorization
+     *
      * @param $sitePin
      * @param $sitePublic
      * @return false|string
@@ -50,6 +55,8 @@ class Client
     }
 
     /**
+     * Get mandatory vendor assets from Pay2
+     *
      * @return mixed
      */
     public function getPaymentAssets()
@@ -71,6 +78,9 @@ class Client
     }
 
     /**
+     * Test callback response from Pay2
+     * DO NOT USE PRODUCTION MODE!
+     *
      * @param $callbackRequest
      */
     public function testCallback($callbackRequest)
@@ -87,6 +97,8 @@ class Client
     }
 
     /**
+     * Generate Pay2 payment form
+     *
      * @param $orderId
      * @param $payTotal
      * @param $customerData
@@ -120,7 +132,7 @@ class Client
                 <div class="text-center">
                     <button class="btn btn-primary btn-lg" type="submit" style="font-size: 24px; margin-top: 10px">
                         <i class="fa fa-credit-card" aria-hidden="true"></i>
-                        Biztonságos bankkártyás fizetés
+                        '.$_ENV['PAY2_SUBMIT_BUTTON'].'
                     </button>
                 </div>
             </form>';

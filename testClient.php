@@ -47,8 +47,8 @@ $assets = $client->getPaymentAssets();
         <div class="card-body">
             <?php echo $form; ?>
 
-            <a href="<?php echo $assets->otpsimple_tos; ?>">
-                <img class="img-fluid" src="<?php echo $assets->otpsimple_logo_with_cards; ?>" />
+            <a href="<?php echo $assets->vendor_tos; ?>">
+                <img class="img-fluid" src="<?php echo $assets->vendor_logo_with_cards; ?>" />
             </a>
 
             <p><?php echo $assets->pay2_slogen; ?></p>
