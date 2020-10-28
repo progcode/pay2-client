@@ -15,12 +15,12 @@
       "email": "support@icoders.co"
     }
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "minimum-stability": "dev",
   "require": {
     "php": "~7.2.0|~7.3.0|~7.4.0",
-    "vlucas/phpdotenv": "5.2.*"
+    "vlucas/phpdotenv": "*"
   },
   "autoload": {
     "psr-4": {

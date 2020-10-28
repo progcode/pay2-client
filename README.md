@@ -22,7 +22,7 @@ Pay2 Client is available at packagist.org, so you can use composer to download t
 ```
 {
     "require": {
-        "progcode/pay2-client": "dev-master"
+        "progcode/pay2-client": "dev-main"
     }
 }
 ```
