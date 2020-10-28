@@ -1,0 +1,30 @@
+{
+  "name": "progcode/pay2-client",
+  "type": "library",
+  "description": "Pay2.hu Client BETA",
+  "keywords": [
+    "payment",
+    "gateway",
+    "paymentgateway",
+    "barion",
+    "otpsimple"
+  ],
+  "authors": [
+    {
+      "name": "Iconocoders",
+      "email": "support@icoders.co"
+    }
+  ],
+  "version": "0.1.0",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {
+    "php": "~7.2.0|~7.3.0|~7.4.0",
+    "vlucas/phpdotenv": "5.2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pay2\\": "Pay2/"
+    }
+  }
+}
