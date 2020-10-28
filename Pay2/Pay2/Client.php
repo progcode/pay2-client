@@ -34,7 +34,7 @@ class Client
      */
     public function __construct()
     {
-        $this->dotenv = Dotenv::createMutable(__DIR__.'/../../');
+        $this->dotenv = Dotenv::createMutable($_SERVER['DOCUMENT_ROOT']);
         $this->dotenv->load();
     }
 
@@ -103,14 +103,15 @@ class Client
      * @param $payTotal
      * @param $customerData
      * @param $paymentTosHtml
+     * @param bool $customCallback
      * @return string
      */
-    public function buildForm($orderId, $payTotal, $customerData, $paymentTosHtml)
+    public function buildForm($orderId, $payTotal, $customerData, $paymentTosHtml, $customCallback = false)
     {
         $transactionData = array(
             'site_pin' => $_ENV['PAY2_SITE_PIN'],
             'site_secret' => $this->generateSecretKey($_ENV['PAY2_SITE_PIN'], $_ENV['PAY2_SITE_PUBLIC']),
-            'client_callback' => $_ENV['PAY2_CALLBACK_URL'],
+            'client_callback' => ($customCallback) ? $customCallback : $_ENV['PAY2_CALLBACK_URL'],
             'order_id' => $orderId,
             'pay_total' => $payTotal,
             'name' => $customerData['name'],
