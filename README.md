@@ -9,7 +9,7 @@ Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhető
 
 ## Version
 
-0.1.0
+0.1.2
 
 ## Requirements
 
@@ -22,7 +22,7 @@ Pay2 Client is available at packagist.org, so you can use composer to download t
 ```
 {
     "require": {
-        "progcode/pay2-client": "dev-main"
+        "progcode/pay2-client": "dev-develop"
     }
 }
 ```
