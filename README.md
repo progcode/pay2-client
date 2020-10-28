@@ -6,3 +6,26 @@ A Pay2.hu egy gyors, egyszerűen integrálható fizetési kapu szolgáltatás OT
 Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhetőségeink egyikén és fogadjon el akár** már ma bankkártyás fizetést webáruházában!
 
 ** Amennyiben minden technikai és szerződési feltétel rendelkezésre áll.
+
+## Version
+
+0.1.0
+
+## Requirements
+
+ * PHP 7.2+
+
+## Installation
+
+Pay2 Client is available at packagist.org, so you can use composer to download this library.
+
+```
+{
+    "require": {
+        "progcode/pay2-client": "dev-master"
+    }
+}
+```
+
+## Source code
+https://github.com/progcode/pay2-client
