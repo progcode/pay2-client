@@ -3,13 +3,13 @@
 ## Pay2.hu Client
 A Pay2.hu egy gyors, egyszerűen integrálható fizetési kapu szolgáltatás OTP Simple és Barion fizetési rendszerekhez. A rendszert partnereink igényei alapján hoztuk létre, az integráció és a jóváhagyás akár 1 munkanap alatt** megtörténhet.
 
-Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhetőségeink egyikén és fogadjon el akár** már ma bankkártyás fizetést webáruházában!
+Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhetőségeink egyikén és fogadjon el **akár már ma bankkártyás fizetést webáruházában!
 
-** Amennyiben minden technikai és szerződési feltétel rendelkezésre áll.
+**Amennyiben minden technikai és szerződési feltétel rendelkezésre áll.
 
 ## Version
 
-0.1.2
+0.1.6
 
 ## Requirements
 
