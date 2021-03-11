@@ -12,6 +12,11 @@ class Client
     /**
      * @var string
      */
+    public static $clientVersion = '0.1.6';
+    
+    /**
+     * @var string
+     */
     public static $apiUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
 
     /**
@@ -115,12 +120,14 @@ class Client
             'order_id' => $orderId,
             'pay_total' => $payTotal,
             'name' => $customerData['name'],
+            'phone' => $customerData['phone'],
             'email' => $customerData['email'],
-            'city' => $customerData['city'],
+            'state' => $customerData['state'],
             'zip' => $customerData['zip'],
+            'city' => $customerData['city'],
             'address' => $customerData['address'],
         );
-
+        
         return '<form action="'.self::$apiUrl.'" method="post">
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
                 <label class="pay2payment-form__label pay2payment-form__label-for-checkbox checkbox">
