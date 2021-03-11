@@ -12,6 +12,11 @@ class Client
     /**
      * @var string
      */
+    public static $clientVersion = '0.1.6';
+    
+    /**
+     * @var string
+     */
     public static $apiUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
 
     /**
