@@ -12,7 +12,7 @@ class Client
     /**
      * @var string
      */
-    public static $clientVersion = '0.1.6';
+    public static $clientVersion = '0.1.7';
     
     /**
      * @var string
@@ -36,10 +36,20 @@ class Client
 
     /**
      * Client constructor.
+     * With $useLegacyDotenv you can use vlucas/phpdotenv 3.x in older projects/frameworks versions
+     * 
+     * @param false $useLegacyDotenv
      */
-    public function __construct()
+    public function __construct($useLegacyDotenv = false)
     {
-        $this->dotenv = Dotenv::createMutable($_SERVER['DOCUMENT_ROOT']);
+        switch ($useLegacyDotenv) {
+            case true:
+                $this->dotenv = Dotenv::create(__DIR__, '/../../../../../.env');
+                break;
+            default:
+                $this->dotenv = Dotenv::createMutable($_SERVER['DOCUMENT_ROOT']);
+        }
+
         $this->dotenv->load();
     }
 
