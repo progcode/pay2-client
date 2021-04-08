@@ -12,7 +12,7 @@ class Client
     /**
      * @var string
      */
-    public static $clientVersion = '0.1.7';
+    public static $clientVersion = '0.1.7.1';
     
     /**
      * @var string
