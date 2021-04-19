@@ -12,7 +12,7 @@ class Client
     /**
      * @var string
      */
-    public static $clientVersion = '0.1.7.1';
+    public static $clientVersion = '0.1.8';
     
     /**
      * @var string
@@ -117,7 +117,7 @@ class Client
      * @param $orderId
      * @param $payTotal
      * @param $customerData
-     * @param $paymentTosHtml
+     * @param bool $paymentTosHtml
      * @param bool $customCallback
      * @return string
      */
@@ -138,8 +138,12 @@ class Client
             'address' => $customerData['address'],
         );
         
-        return '<form action="'.self::$apiUrl.'" method="post">
+        switch($paymentTosHtml) {
+            case true:
+                $form = '<form action="'.self::$apiUrl.'" method="post">
+                <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
+                
                 <label class="pay2payment-form__label pay2payment-form__label-for-checkbox checkbox">
                     <input type="checkbox" class="pay2payment-form__input pay2payment-form__input-checkbox input-checkbox" name="terms-payment" id="terms-payment" required>
                     <span class="pay2payment-terms-and-conditions-checkbox-text">
@@ -154,5 +158,22 @@ class Client
                     </button>
                 </div>
             </form>';
+                break;
+                
+            default:
+                $form = '<form action="'.self::$apiUrl.'" method="post">
+                <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
+                <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
+                
+                <div class="text-center">
+                    <button class="btn btn-primary btn-lg" type="submit" style="font-size: 24px; margin-top: 10px">
+                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                        '.$_ENV['PAY2_SUBMIT_BUTTON'].'
+                    </button>
+                </div>
+            </form>';
+        }
+        
+        return $form;
     }
 }

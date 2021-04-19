@@ -9,6 +9,10 @@ Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhető
 
 ## Version
 
+0.1.8
+- $paymentTosHtml is not a mandatory parameter anymore
+- send client version to API
+
 0.1.7
 With $useLegacyDotenv you can use vlucas/phpdotenv 3.x in older projects/frameworks versions
 
