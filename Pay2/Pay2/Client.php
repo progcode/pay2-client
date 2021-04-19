@@ -141,7 +141,7 @@ class Client
         switch($paymentTosHtml) {
             case true:
                 $form = '<form action="'.self::$apiUrl.'" method="post">
-                <input type="hidden" name="apiVersion" value="'.self::$clientVersion.'" />
+                <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
                 
                 <label class="pay2payment-form__label pay2payment-form__label-for-checkbox checkbox">
@@ -162,7 +162,7 @@ class Client
                 
             default:
                 $form = '<form action="'.self::$apiUrl.'" method="post">
-                <input type="hidden" name="apiVersion" value="'.self::$clientVersion.'" />
+                <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
                 
                 <div class="text-center">
