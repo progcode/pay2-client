@@ -10,24 +10,52 @@ use Dotenv\Dotenv;
 class Client
 {
     /**
+     * API client version
+     *
      * @var string
      */
-    public static $clientVersion = '0.1.8';
-    
-    /**
-     * @var string
-     */
-    public static $apiUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
+    public static $clientVersion = '0.2.0';
 
     /**
+     * Start payment url
+     *
      * @var string
      */
-    public static $otpSimpleAssets = 'https://pay2.hu/paymentAssets/vendor/otpsimple';
+    public static $paymentStartUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
 
     /**
+     * API url
+     *
      * @var string
      */
-    public static $barionAssets = 'https://pay2.hu/paymentAssets/vendor/barion';
+    public static $apiUrl = 'https://pay2.hu/api/';
+
+    /**
+     * Assets url
+     *
+     * @var string
+     */
+    public static $paymentAssetsUrl = 'https://pay2.hu/paymentAssets/';
+
+    /**
+     * API endpoints
+     *
+     * @var string[]
+     */
+    public static $apiEndpoints = [
+        'client' => 'client',
+        'transaction_status' => 'transaction/status'
+    ];
+
+    /**
+     * Assets endpoints
+     *
+     * @var string[]
+     */
+    public static $assetsEndpoints = [
+        'otp' => 'vendor/otpsimple',
+        'barion' => 'vendor/barion',
+    ];
 
     /**
      * @var Dotenv
@@ -37,7 +65,7 @@ class Client
     /**
      * Client constructor.
      * With $useLegacyDotenv you can use vlucas/phpdotenv 3.x in older projects/frameworks versions
-     * 
+     *
      * @param false $useLegacyDotenv
      */
     public function __construct($useLegacyDotenv = false)
@@ -80,35 +108,16 @@ class Client
 
         switch ($paymentVendor) {
             case 'otpsimple':
-                $paymentAssets = self::$otpSimpleAssets;
+                $paymentAssets = self::$paymentAssetsUrl.self::$assetsEndpoints['otp'];
                 break;
             case 'barion':
-                $paymentAssets = self::$barionAssets;
+                $paymentAssets = self::$paymentAssetsUrl.self::$assetsEndpoints['barion'];
                 break;
             default:
-                $paymentAssets = self::$otpSimpleAssets;
+                $paymentAssets = self::$paymentAssetsUrl.self::$assetsEndpoints['otp'];
         }
 
         return json_decode(file_get_contents($paymentAssets));
-    }
-
-    /**
-     * Test callback response from Pay2
-     * DO NOT USE PRODUCTION MODE!
-     *
-     * @param $callbackRequest
-     */
-    public function testCallback($callbackRequest)
-    {
-        echo "<pre>";
-        var_dump($callbackRequest);
-        echo "</pre>";
-
-        if($callbackRequest['message']) {
-            echo "<pre>";
-            print_r(base64_decode($callbackRequest['message']));
-            echo "</pre>";
-        }
     }
 
     /**
@@ -137,13 +146,13 @@ class Client
             'city' => $customerData['city'],
             'address' => $customerData['address'],
         );
-        
+
         switch($paymentTosHtml) {
             case true:
-                $form = '<form action="'.self::$apiUrl.'" method="post">
+                $form = '<form action="'.self::$paymentStartUrl.'" method="post">
                 <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
-                
+
                 <label class="pay2payment-form__label pay2payment-form__label-for-checkbox checkbox">
                     <input type="checkbox" class="pay2payment-form__input pay2payment-form__input-checkbox input-checkbox" name="terms-payment" id="terms-payment" required>
                     <span class="pay2payment-terms-and-conditions-checkbox-text">
@@ -159,12 +168,12 @@ class Client
                 </div>
             </form>';
                 break;
-                
+
             default:
                 $form = '<form action="'.self::$apiUrl.'" method="post">
                 <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
-                
+
                 <div class="text-center">
                     <button class="btn btn-primary btn-lg" type="submit" style="font-size: 24px; margin-top: 10px">
                         <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -173,7 +182,39 @@ class Client
                 </div>
             </form>';
         }
-        
+
         return $form;
+    }
+
+    /**
+     * Test callback response from Pay2
+     * DO NOT USE PRODUCTION MODE!
+     *
+     * @param $callbackRequest
+     */
+    public function testCallback($callbackRequest)
+    {
+        echo "<pre>";
+        var_dump($callbackRequest);
+        echo "</pre>";
+
+        if($callbackRequest['message']) {
+            echo "<pre>";
+            print_r(base64_decode($callbackRequest['message']));
+            echo "</pre>";
+        }
+    }
+
+    /**
+     * Get transaction status with original orderId
+     *
+     * @param $orderId
+     * @return mixed
+     */
+    public function getPaymentStatus($orderId)
+    {
+        $status = self::$apiUrl.self::$apiEndpoints['transaction_status'];
+
+        return json_decode(file_get_contents($status));
     }
 }
