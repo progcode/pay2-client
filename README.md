@@ -9,6 +9,10 @@ Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhető
 
 ## Version
 
+0.2.0
+- Pay2.hu now supports custom products
+- Added payment status api endpoint for check transactions
+
 0.1.8
 - $paymentTosHtml is not a mandatory parameter anymore
 - send client version to API
