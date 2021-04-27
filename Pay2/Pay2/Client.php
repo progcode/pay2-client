@@ -21,7 +21,7 @@ class Client
      *
      * @var string
      */
-    public static $paymentStartUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrl = 'https://paymentadmin.loc/Gateway/RequestPayment.php?v3';
 
     /**
      * API url
@@ -126,11 +126,12 @@ class Client
      * @param $orderId
      * @param $payTotal
      * @param $customerData
-     * @param bool $paymentTosHtml
-     * @param bool $customCallback
+     * @param $paymentTosHtml
+     * @param false $productData
+     * @param false $customCallback
      * @return string
      */
-    public function buildForm($orderId, $payTotal, $customerData, $paymentTosHtml, $customCallback = false)
+    public function buildForm($orderId, $payTotal, $customerData, $paymentTosHtml, $productData = false, $customCallback = false)
     {
         $transactionData = array(
             'site_pin' => $_ENV['PAY2_SITE_PIN'],
@@ -145,6 +146,12 @@ class Client
             'zip' => $customerData['zip'],
             'city' => $customerData['city'],
             'address' => $customerData['address'],
+            'product' => [
+                'name' => ($productData) ? $productData['name'] : '',
+                'desc' => ($productData) ? $productData['desc'] : '',
+                'qty' => ($productData) ? $productData['qty'] : '',
+                'sku' => ($productData) ? $productData['sku'] : '',
+            ]
         );
 
         switch($paymentTosHtml) {
@@ -198,7 +205,7 @@ class Client
         var_dump($callbackRequest);
         echo "</pre>";
 
-        if($callbackRequest['message']) {
+        if(isset($callbackRequest['message'])) {
             echo "<pre>";
             print_r(base64_decode($callbackRequest['message']));
             echo "</pre>";
@@ -213,7 +220,7 @@ class Client
      */
     public function getPaymentStatus($orderId)
     {
-        $status = self::$apiUrl.self::$apiEndpoints['transaction_status'];
+        $status = self::$apiUrl.self::$apiEndpoints['transaction_status'].'/'.$orderId;
 
         return json_decode(file_get_contents($status));
     }
