@@ -21,7 +21,7 @@ class Client
      *
      * @var string
      */
-    public static $paymentStartUrl = 'https://paymentadmin.loc/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
 
     /**
      * API url
@@ -29,6 +29,20 @@ class Client
      * @var string
      */
     public static $apiUrl = 'https://pay2.hu/api/';
+
+    /**
+     * Client API
+     *
+     * @var string
+     */
+    public static $clientApiUrl = 'https://api.pay2.hu/';
+
+    /**
+     * Client JS
+     *
+     * @var string
+     */
+    public static $clientApiJs = 'clients_v1.js#bc=';
 
     /**
      * Assets url
@@ -82,19 +96,36 @@ class Client
     }
 
     /**
-     * Generate Pay2 site secret key for authorization
+     * Get client api js
      *
-     * @param $sitePin
-     * @param $sitePublic
-     * @return false|string
+     * @return string
      */
-    public function generateSecretKey($sitePin, $sitePublic)
+    public function getPaymentApiJs()
     {
-        if (empty($sitePin)){
-            return false;
-        }
+        return '<script type="text/javascript" src="'.self::$clientApiUrl.self::$clientApiJs.self::$clientVersion.'"></script>';
+    }
 
-        return hash('sha256', $sitePublic.$sitePin);
+    /**
+     * Add metrics to checkout
+     *
+     * @param $orderStatus
+     * @param $orderId
+     * @return string
+     */
+    public function checkoutMetricsJs($orderStatus, $orderId)
+    {
+        return "<script>
+            if (typeof client.pushData !== 'undefined') {
+                let shopOrder = {
+                    meta_data: {
+                        orderStatus: '$orderStatus',
+                        orderRef: $orderId
+                    }
+                };
+
+                client.pushData(shopOrder);
+            }
+        </script>";
     }
 
     /**
@@ -118,6 +149,22 @@ class Client
         }
 
         return json_decode(file_get_contents($paymentAssets));
+    }
+
+    /**
+     * Generate Pay2 site secret key for authorization
+     *
+     * @param $sitePin
+     * @param $sitePublic
+     * @return false|string
+     */
+    public function generateSecretKey($sitePin, $sitePublic)
+    {
+        if (empty($sitePin)){
+            return false;
+        }
+
+        return hash('sha256', $sitePublic.$sitePin);
     }
 
     /**

@@ -47,6 +47,8 @@ $assets = $client->getPaymentAssets();
             padding-top: 30px;
         }
     </style>
+
+    <?php echo $client->getPaymentApiJs(); ?>
 </head>
 <body>
 
@@ -55,6 +57,7 @@ $assets = $client->getPaymentAssets();
         <div class="card-header">TestForm</div>
         <div class="card-body">
             <?php echo $form; ?>
+            <?php echo $client->checkoutMetricsJs('prepare', $orderId); ?>
 
             <a href="<?php echo $assets->vendor_tos; ?>">
                 <img class="img-fluid" src="<?php echo $assets->vendor_logo_with_cards; ?>" />
