@@ -14,7 +14,7 @@ class Client
      *
      * @var string
      */
-    public static $clientVersion = '0.2.0';
+    public static $clientVersion = '0.2.0.1';
 
     /**
      * Start payment url
