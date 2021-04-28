@@ -14,7 +14,7 @@ class Client
      *
      * @var string
      */
-    public static $clientVersion = '0.2.0.1';
+    public static $clientVersion = '0.2.0.2';
 
     /**
      * Start payment url
@@ -224,7 +224,7 @@ class Client
                 break;
 
             default:
-                $form = '<form action="'.self::$apiUrl.'" method="post">
+                $form = '<form action="'.self::$paymentStartUrl.'" method="post">
                 <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
 
