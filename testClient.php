@@ -6,7 +6,7 @@ use Pay2\Pay2\Client;
 $client = new Client();
 
 $orderId = str_replace(array('.', ':', '/'), "", @$_SERVER['SERVER_ADDR']) . @date("U", time()) . rand(1000, 9999);
-$payTotal = 345000;
+$payTotal = 34500;
 
 //sample tos
 $sampleTos = 'Tu nunc coci ejus. Tu autem cocus Lab et probavimus liceat mihi sine causa est nunc coci interficere.
@@ -23,8 +23,15 @@ $sampleCustomer = [
     'address' => 'Teszt utca 20',
 ];
 
+$sampleProduct = [
+    'name' => 'Test product',
+    'desc' => 'Test product leiras',
+    'qty' => '1',
+    'sku' => '123456SKU',
+];
+
 //build our sample form
-$form = $client->buildForm($orderId, $payTotal, $sampleCustomer, $sampleTos);
+$form = $client->buildForm($orderId, $payTotal, $sampleCustomer, $sampleTos, $sampleProduct);
 $assets = $client->getPaymentAssets();
 ?>
 <!DOCTYPE html>
@@ -40,6 +47,8 @@ $assets = $client->getPaymentAssets();
             padding-top: 30px;
         }
     </style>
+
+    <?php echo $client->getPaymentApiJs(); ?>
 </head>
 <body>
 
@@ -48,6 +57,7 @@ $assets = $client->getPaymentAssets();
         <div class="card-header">TestForm</div>
         <div class="card-body">
             <?php echo $form; ?>
+            <?php echo $client->checkoutMetricsJs('prepare', $orderId); ?>
 
             <a href="<?php echo $assets->vendor_tos; ?>">
                 <img class="img-fluid" src="<?php echo $assets->vendor_logo_with_cards; ?>" />
