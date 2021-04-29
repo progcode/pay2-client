@@ -9,6 +9,11 @@ Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhető
 
 ## Version
 
+0.3.0
+- Fixes, tweaks
+- Updated client js support
+- Now support vendor js (Barion)
+
 0.2.0
 - Pay2.hu now supports custom products
 - Added payment status api endpoint for check transactions

@@ -49,6 +49,7 @@ $assets = $client->getPaymentAssets();
     </style>
 
     <?php echo $client->getPaymentApiJs(); ?>
+    <?php echo $client->getPaymentVendorJs('1234567'); ?>
 </head>
 <body>
 
