@@ -14,7 +14,7 @@ class Client
      *
      * @var string
      */
-    public static $clientVersion = '0.2.0.2';
+    public static $clientVersion = '0.3.0';
 
     /**
      * Start payment url
@@ -42,7 +42,7 @@ class Client
      *
      * @var string
      */
-    public static $clientApiJs = 'clients_v1.js#bc=';
+    public static $clientApiJs = 'clients_v1.js#v=';
 
     /**
      * Assets url
@@ -115,15 +115,15 @@ class Client
     public function checkoutMetricsJs($orderStatus, $orderId)
     {
         return "<script>
-            if (typeof client.pushData !== 'undefined') {
+            if (typeof pay2client.pushData !== 'undefined') {
                 let shopOrder = {
                     meta_data: {
                         orderStatus: '$orderStatus',
-                        orderRef: $orderId
+                        orderRef: '$orderId'
                     }
                 };
 
-                client.pushData(shopOrder);
+                pay2client.pushData(shopOrder);
             }
         </script>";
     }
@@ -149,6 +149,44 @@ class Client
         }
 
         return json_decode(file_get_contents($paymentAssets));
+    }
+
+    /**
+     * Get mandatory vendor js scripts
+     *
+     * @param $trackingId
+     * @return string|null
+     */
+    public function getPaymentVendorJs($trackingId)
+    {
+        $paymentVendor = $_ENV['PAY2_VENDOR'];
+
+        if($paymentVendor == 'barion') {
+            return '<script>
+                // Create BP element on the window
+                window["bp"] = window["bp"] || function () {
+                    (window["bp"].q = window["bp"].q || []).push(arguments);
+                };
+                window["bp"].l = 1 * new Date();
+
+                // Insert a script tag on the top of the head to load bp.js
+                scriptElement = document.createElement("script");
+                firstScript = document.getElementsByTagName("script")[0];
+                scriptElement.async = true;
+                scriptElement.src = \'https://pixel.barion.com/bp.js\';
+                firstScript.parentNode.insertBefore(scriptElement, firstScript);
+                window[\'barion_pixel_id\'] = \''.$trackingId.'\';
+
+                // Send init event
+                bp(\'init\', \'addBarionPixelId\', window[\'barion_pixel_id\']);
+            </script>
+
+            <noscript>
+                <img height="1" width="1" style="display:none" alt="Barion Pixel" src="https://pixel.barion.com/a.gif?ba_pixel_id='.$trackingId.'&ev=contentView&noscript=1">
+            </noscript>';
+        }
+
+        return null;
     }
 
     /**
