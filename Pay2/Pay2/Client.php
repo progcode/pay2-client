@@ -14,28 +14,28 @@ class Client
      *
      * @var string
      */
-    public static $clientVersion = '0.3.0';
+    public static $clientVersion = '0.3.1';
 
     /**
      * Start payment url
      *
      * @var string
      */
-    public static $paymentStartUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrl = 'https://pay2.delocal.hu/Gateway/RequestPayment.php?v3';
 
     /**
      * API url
      *
      * @var string
      */
-    public static $apiUrl = 'https://pay2.hu/api/';
+    public static $apiUrl = 'https://pay2.delocal.hu/api/';
 
     /**
      * Client API
      *
      * @var string
      */
-    public static $clientApiUrl = 'https://api.pay2.hu/';
+    public static $clientApiUrl = 'https://api.pay2.delocal.hu/';
 
     /**
      * Client JS
@@ -49,7 +49,7 @@ class Client
      *
      * @var string
      */
-    public static $paymentAssetsUrl = 'https://pay2.hu/paymentAssets/';
+    public static $paymentAssetsUrl = 'https://pay2.delocal.hu/paymentAssets/';
 
     /**
      * API endpoints
