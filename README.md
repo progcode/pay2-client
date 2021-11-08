@@ -9,6 +9,12 @@ Amennyiben felkeltettük érdeklődését, lépjen velünk kapcsolatba lérhető
 
 ## Version
 
+0.4.0 (v2)
+- Barion updates, fixes (callback)
+- Coupon (discount) support
+- Fixes, tweaks
+- new API domain from this version
+
 0.3.0
 - Fixes, tweaks
 - Updated client js support
