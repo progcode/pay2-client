@@ -14,30 +14,30 @@ class Client
      *
      * @var string
      */
-    public static $clientVersion = '0.3.2';
+    public static $clientVersion = '0.4.0';
 
     /**
      * Start payment url
      *
      * @var string
      */
-    public static $paymentStartUrl = 'https://pay2.delocal.hu/Gateway/RequestPayment.php?v3';
-    public static $paymentStartUrlDEV = 'https://pay2-test.delocal.hu/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrl = 'https://v2.pay2.hu/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrlDEV = 'https://sandbox.v2.pay2.hu/Gateway/RequestPayment.php?v3';
 
     /**
      * API url
      *
      * @var string
      */
-    public static $apiUrl = 'https://pay2.delocal.hu/api/';
-    public static $apiUrlDEV = 'https://pay2-test.delocal.hu/api/';
+    public static $apiUrl = 'https://v2.pay2.hu/api/';
+    public static $apiUrlDEV = 'https://sandbox.v2.pay2.hu/api/';
 
     /**
      * Client API
      *
      * @var string
      */
-    public static $clientApiUrl = 'https://api.pay2.delocal.hu/';
+    public static $clientApiUrl = 'https://v2.pay2.hu/';
 
     /**
      * Client JS
@@ -51,7 +51,7 @@ class Client
      *
      * @var string
      */
-    public static $paymentAssetsUrl = 'https://pay2.delocal.hu/paymentAssets/';
+    public static $paymentAssetsUrl = 'https://v2.pay2.hu/paymentAssets/';
 
     /**
      * API endpoints
