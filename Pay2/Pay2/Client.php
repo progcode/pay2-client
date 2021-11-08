@@ -14,28 +14,30 @@ class Client
      *
      * @var string
      */
-    public static $clientVersion = '0.3.0';
+    public static $clientVersion = '0.3.2';
 
     /**
      * Start payment url
      *
      * @var string
      */
-    public static $paymentStartUrl = 'https://pay2.hu/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrl = 'https://pay2.delocal.hu/Gateway/RequestPayment.php?v3';
+    public static $paymentStartUrlDEV = 'https://pay2-test.delocal.hu/Gateway/RequestPayment.php?v3';
 
     /**
      * API url
      *
      * @var string
      */
-    public static $apiUrl = 'https://pay2.hu/api/';
+    public static $apiUrl = 'https://pay2.delocal.hu/api/';
+    public static $apiUrlDEV = 'https://pay2-test.delocal.hu/api/';
 
     /**
      * Client API
      *
      * @var string
      */
-    public static $clientApiUrl = 'https://api.pay2.hu/';
+    public static $clientApiUrl = 'https://api.pay2.delocal.hu/';
 
     /**
      * Client JS
@@ -49,7 +51,7 @@ class Client
      *
      * @var string
      */
-    public static $paymentAssetsUrl = 'https://pay2.hu/paymentAssets/';
+    public static $paymentAssetsUrl = 'https://pay2.delocal.hu/paymentAssets/';
 
     /**
      * API endpoints
@@ -214,9 +216,10 @@ class Client
      * @param $paymentTosHtml
      * @param false $productData
      * @param false $customCallback
+     * @param false $testMode
      * @return string
      */
-    public function buildForm($orderId, $payTotal, $customerData, $paymentTosHtml, $productData = false, $customCallback = false)
+    public function buildForm($orderId, $payTotal, $customerData, $paymentTosHtml, $productData = false, $customCallback = false, $testMode = false)
     {
         $transactionData = array(
             'site_pin' => $_ENV['PAY2_SITE_PIN'],
@@ -239,9 +242,17 @@ class Client
             ]
         );
 
+        switch ($testMode) {
+            case true:
+                $paymentUrl = self::$paymentStartUrlDEV;
+                break;
+            default:
+                $paymentUrl = self::$paymentStartUrl;
+        }
+
         switch($paymentTosHtml) {
             case true:
-                $form = '<form action="'.self::$paymentStartUrl.'" method="post">
+                $form = '<form action="'.$paymentUrl.'" method="post">
                 <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
 
@@ -262,7 +273,7 @@ class Client
                 break;
 
             default:
-                $form = '<form action="'.self::$paymentStartUrl.'" method="post">
+                $form = '<form action="'.$paymentUrl.'" method="post">
                 <input type="hidden" name="clientVersion" value="'.self::$clientVersion.'" />
                 <input type="hidden" name="transactionData" value="'.base64_encode(json_encode($transactionData)).'" />
 
@@ -301,11 +312,20 @@ class Client
      * Get transaction status with original orderId
      *
      * @param $orderId
+     * @param false $testMode
      * @return mixed
      */
-    public function getPaymentStatus($orderId)
+    public function getPaymentStatus($orderId, $testMode = false)
     {
-        $status = self::$apiUrl.self::$apiEndpoints['transaction_status'].'/'.$orderId;
+        switch ($testMode) {
+            case true:
+                $apiUrl = self::$apiUrlDEV;
+                break;
+            default:
+                $apiUrl = self::$apiUrl;
+        }
+
+        $status = $apiUrl.self::$apiEndpoints['transaction_status'].'/'.$orderId;
 
         return json_decode(file_get_contents($status));
     }
