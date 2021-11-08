@@ -1,5 +1,5 @@
 {
-  "name": "delocalzrt/pay2-client",
+  "name": "progcode/pay2-client",
   "type": "library",
   "description": "Pay2 Client",
   "keywords": [
@@ -13,13 +13,9 @@
     {
       "name": "Iconocoders",
       "email": "support@icoders.co"
-    },
-    {
-      "name": "Delocal Zrt",
-      "email": "info@delocal.hu"
     }
   ],
-  "version": "0.3.2",
+  "version": "0.4.0",
   "license": "MIT",
   "minimum-stability": "dev",
   "require": {
